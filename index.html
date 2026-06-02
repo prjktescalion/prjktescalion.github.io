@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Escalion — Coming Soon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Barlow+Condensed:wght@400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange:    #E84400;
+    --orange2:   #FF6A1A;
+    --black:     #0A0A0A;
+    --off-black: #111111;
+    --white:     #F5F0E8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Barlow Condensed', sans-serif;
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+
+  /* ── HALFTONE BACKGROUND ── */
+  .bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 75% 40%, rgba(232,68,0,0.22) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 50% at 10% 80%, rgba(232,68,0,0.08) 0%, transparent 55%),
+      var(--black);
+  }
+  .bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(232,68,0,0.28) 2px, transparent 2px);
+    background-size: 28px 28px;
+    mask-image: radial-gradient(ellipse 80% 80% at 75% 38%, black 0%, transparent 60%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 80% at 75% 38%, black 0%, transparent 60%);
+  }
+  .bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.035) 1.5px, transparent 1.5px);
+    background-size: 22px 22px;
+    background-position: 11px 11px;
+  }
+
+  .scanlines {
+    position: fixed; inset: 0; z-index: 1; pointer-events: none;
+    background: repeating-linear-gradient(to bottom,
+      transparent 0px, transparent 3px,
+      rgba(0,0,0,0.07) 3px, rgba(0,0,0,0.07) 4px);
+  }
+
+  /* ── WRAPPER ── */
+  .wrapper {
+    position: relative;
+    z-index: 10;
+  }
+
+  /* ── TOPBAR ── */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 56px;
+    border-bottom: 1px solid rgba(232,68,0,0.18);
+    animation: fade-down 0.7s ease both;
+  }
+  .topbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .topbar-logo img {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+  }
+  .topbar-logo span {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .topbar-link {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    color: rgba(245,240,232,0.4);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .topbar-link:hover { color: var(--orange2); }
+  .topbar-badge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    color: var(--orange2);
+    border: 1px solid rgba(232,68,0,0.4);
+    padding: 5px 14px;
+    text-transform: uppercase;
+    transition: background 0.2s, color 0.2s;
+  }
+  .topbar-badge:hover { background: var(--orange); color: var(--black); border-color: var(--orange); }
+
+  /* ── HERO ── */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 60px;
+    align-items: center;
+    padding: 80px 56px 72px;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .hero-left { position: relative; }
+
+  .pre-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.28em;
+    color: var(--orange2);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: fade-up 0.6s 0.15s ease both;
+  }
+  .pre-label::before {
+    content: '';
+    display: block;
+    width: 28px; height: 2px;
+    background: var(--orange2);
+    flex-shrink: 0;
+  }
+
+  .hero-title {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: clamp(4.5rem, 8vw, 8.5rem);
+    line-height: 0.90;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    animation: fade-up 0.6s 0.28s ease both;
+  }
+  .hero-title .line-outline {
+    -webkit-text-stroke: 2px var(--white);
+    color: transparent;
+    display: block;
+  }
+  .hero-title .line-solid {
+    color: var(--white);
+    display: block;
+  }
+  .hero-title .line-orange {
+    color: var(--orange);
+    display: block;
+    text-shadow: 0 0 50px rgba(232,68,0,0.55), 0 0 100px rgba(232,68,0,0.20);
+  }
+
+  .hero-desc {
+    margin-top: 32px;
+    margin-bottom: 44px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: rgba(245,240,232,0.5);
+    text-transform: uppercase;
+    line-height: 1.6;
+    max-width: 520px;
+    animation: fade-up 0.6s 0.42s ease both;
+  }
+  .hero-desc strong { color: var(--white); }
+
+  .cta-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    animation: fade-up 0.6s 0.55s ease both;
+  }
+
+  .btn-primary {
+    background: var(--orange);
+    color: var(--black);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border: none;
+    padding: 15px 38px;
+    cursor: crosshair;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+    transition: box-shadow 0.2s, transform 0.15s, background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary:hover {
+    background: var(--orange2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(232,68,0,0.45);
+  }
+
+  .btn-ghost {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    color: rgba(245,240,232,0.45);
+    text-transform: uppercase;
+    background: none;
+    border: none;
+    cursor: crosshair;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s;
+    text-decoration: none;
+  }
+  .btn-ghost:hover { color: var(--white); }
+  .btn-ghost .arr { transition: transform 0.2s; }
+  .btn-ghost:hover .arr { transform: translateX(5px); }
+
+  /* ── HERO RIGHT: ICON ── */
+  .hero-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fade-in 1s 0.4s ease both;
+  }
+  .icon-wrap {
+    position: relative;
+    width: 300px; height: 300px;
+  }
+  .icon-glow {
+    position: absolute;
+    inset: -40px;
+    background: radial-gradient(circle, rgba(232,68,0,0.30) 0%, transparent 65%);
+    border-radius: 50%;
+    animation: pulse 3.5s ease-in-out infinite;
+  }
+  .icon-glow-outer {
+    position: absolute;
+    inset: -80px;
+    background: radial-gradient(circle, rgba(232,68,0,0.12) 0%, transparent 60%);
+    border-radius: 50%;
+    animation: pulse 3.5s 1.75s ease-in-out infinite;
+  }
+  .icon-img {
+    width: 100%; height: 100%;
+    border-radius: 22%;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 16px 48px rgba(232,68,0,0.45));
+    animation: float 6s ease-in-out infinite;
+  }
+  /* corner ticks */
+  .tick { position: absolute; width: 18px; height: 18px; border-color: var(--orange2); border-style: solid; opacity: 0.45; z-index: 5; }
+  .tl { top: -6px; left: -6px; border-width: 2px 0 0 2px; }
+  .tr { top: -6px; right: -6px; border-width: 2px 2px 0 0; }
+  .bl { bottom: -6px; left: -6px; border-width: 0 0 2px 2px; }
+  .br { bottom: -6px; right: -6px; border-width: 0 2px 2px 0; }
+
+  @keyframes float {
+    0%,100% { transform: translateY(0) rotate(-1deg); }
+    50%      { transform: translateY(-12px) rotate(0.8deg); }
+  }
+  @keyframes pulse {
+    0%,100% { transform: scale(1); opacity: 1; }
+    50%      { transform: scale(1.07); opacity: 0.6; }
+  }
+
+  /* ── TECH TICKER ── */
+  .ticker {
+    border-top: 1px solid rgba(232,68,0,0.14);
+    border-bottom: 1px solid rgba(232,68,0,0.14);
+    background: rgba(232,68,0,0.03);
+    overflow: hidden;
+    padding: 13px 0;
+  }
+  .ticker-inner {
+    display: flex;
+    gap: 44px;
+    width: max-content;
+    animation: ticker 24s linear infinite;
+    align-items: center;
+  }
+  .ticker-item {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.76rem; letter-spacing: 0.18em;
+    color: rgba(245,240,232,0.32);
+    text-transform: uppercase; white-space: nowrap;
+  }
+  .ticker-item .dot { width: 5px; height: 5px; background: var(--orange); border-radius: 50%; flex-shrink: 0; }
+  @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+  /* ── CONTENT SECTIONS ── */
+  .section {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 90px 56px;
+  }
+  .section + .section { padding-top: 0; }
+
+  .eyebrow {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.72rem; letter-spacing: 0.28em;
+    color: var(--orange2); text-transform: uppercase;
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .eyebrow::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--orange2); opacity: 0.4; }
+
+  .section-title {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: clamp(2.8rem, 5vw, 5rem);
+    line-height: 0.90; letter-spacing: -0.01em;
+    text-transform: uppercase; margin-bottom: 56px;
+  }
+  .section-title em { font-style: normal; color: var(--orange); }
+
+  /* ── FEATURES GRID ── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(232,68,0,0.10);
+    border: 1px solid rgba(232,68,0,0.10);
+  }
+  .feat {
+    background: var(--off-black);
+    padding: 36px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.2s;
+  }
+  .feat::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 2px; height: 0;
+    background: var(--orange);
+    transition: height 0.3s ease;
+  }
+  .feat:hover { background: #161616; }
+  .feat:hover::before { height: 100%; }
+  .feat-num {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.68rem; letter-spacing: 0.2em;
+    color: rgba(232,68,0,0.35); margin-bottom: 18px;
+  }
+  .feat-icon { font-size: 1.8rem; margin-bottom: 14px; display: block; }
+  .feat-name {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 1.4rem; letter-spacing: 0.02em;
+    text-transform: uppercase; color: var(--white);
+    margin-bottom: 10px; line-height: 1.1;
+  }
+  .feat-desc {
+    font-size: 0.98rem; font-weight: 400;
+    color: rgba(245,240,232,0.42); line-height: 1.55;
+  }
+
+  /* ── STACK + ROADMAP ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .stack-table { width: 100%; border-collapse: collapse; }
+  .stack-table tr { border-bottom: 1px solid rgba(232,68,0,0.08); }
+  .stack-table tr:last-child { border-bottom: none; }
+  .stack-table td { padding: 15px 6px; font-size: 0.98rem; }
+  .stack-table td:first-child {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.74rem; letter-spacing: 0.12em;
+    color: rgba(245,240,232,0.30); text-transform: uppercase; width: 38%;
+  }
+  .stack-table td:last-child { font-weight: 700; letter-spacing: 0.04em; }
+  .tag {
+    display: inline-block;
+    background: rgba(232,68,0,0.14); color: var(--orange2);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.1em;
+    padding: 2px 9px; margin-left: 8px; vertical-align: middle;
+  }
+
+  .roadmap-list { list-style: none; display: flex; flex-direction: column; }
+  .roadmap-item {
+    display: flex; align-items: center; gap: 14px;
+    font-size: 0.98rem; letter-spacing: 0.03em;
+    color: rgba(245,240,232,0.38);
+    padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .roadmap-item.done { color: rgba(245,240,232,0.85); }
+  .check {
+    width: 17px; height: 17px; flex-shrink: 0;
+    border: 1.5px solid rgba(232,68,0,0.25);
+    display: grid; place-items: center;
+  }
+  .roadmap-item.done .check { background: var(--orange); border-color: var(--orange); }
+  .roadmap-item.done .check::after {
+    content: '';
+    width: 6px; height: 4px;
+    border-left: 2px solid var(--black);
+    border-bottom: 2px solid var(--black);
+    transform: rotate(-45deg) translateY(-1px);
+  }
+
+  /* ── EMAIL ── */
+  .email-band {
+    border-top: 1px solid rgba(232,68,0,0.10);
+    padding: 90px 56px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .email-band::before {
+    content: '';
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%,-50%);
+    width: 700px; height: 400px;
+    background: radial-gradient(ellipse, rgba(232,68,0,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .email-title {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    line-height: 0.90; text-transform: uppercase; margin-bottom: 14px;
+    position: relative;
+  }
+  .email-title em { font-style: normal; color: var(--orange); }
+  .email-sub {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.78rem; letter-spacing: 0.2em;
+    color: rgba(245,240,232,0.35); text-transform: uppercase;
+    margin-bottom: 44px; position: relative;
+  }
+  .email-row {
+    display: flex; justify-content: center; gap: 0;
+    max-width: 480px; margin: 0 auto; position: relative;
+  }
+  .email-input {
+    flex: 1;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(232,68,0,0.28); border-right: none;
+    padding: 15px 18px; color: var(--white);
+    font-family: 'Share Tech Mono', monospace; font-size: 0.83rem;
+    letter-spacing: 0.04em; outline: none; transition: border-color 0.2s, background 0.2s;
+  }
+  .email-input::placeholder { color: rgba(245,240,232,0.22); }
+  .email-input:focus { border-color: var(--orange); background: rgba(232,68,0,0.04); }
+  .email-btn {
+    background: var(--orange); color: var(--black);
+    border: 1px solid var(--orange);
+    padding: 15px 28px;
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 900;
+    font-size: 0.9rem; letter-spacing: 0.15em; text-transform: uppercase;
+    cursor: crosshair; white-space: nowrap;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .email-btn:hover { background: var(--orange2); transform: translateY(-1px); }
+  .email-confirm {
+    font-family: 'Share Tech Mono', monospace; font-size: 0.78rem;
+    color: var(--orange2); letter-spacing: 0.12em;
+    margin-top: 16px; display: none; position: relative;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 26px 56px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-left {
+    font-family: 'Share Tech Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.12em; color: rgba(245,240,232,0.18); text-transform: uppercase;
+  }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a {
+    font-family: 'Share Tech Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.12em; color: rgba(245,240,232,0.22);
+    text-decoration: none; text-transform: uppercase; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--orange2); }
+
+  /* ── KEYFRAMES ── */
+  @keyframes fade-up   { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes fade-down { from { opacity:0; transform:translateY(-14px);} to { opacity:1; transform:translateY(0); } }
+  @keyframes fade-in   { from { opacity:0; } to { opacity:1; } }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 960px) {
+    .hero { grid-template-columns: 1fr; padding: 60px 24px 48px; gap: 40px; }
+    .hero-right { order: -1; }
+    .icon-wrap { width: 200px; height: 200px; }
+    .features-grid { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; gap: 48px; }
+    .section { padding: 60px 24px; }
+    .topbar { padding: 18px 24px; }
+    .email-band { padding: 60px 24px; }
+    footer { padding: 22px 24px; flex-direction: column; gap: 14px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="scanlines"></div>
+
+<div class="wrapper">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-logo">
+      <img src="logo.png" alt="Escalion logo">
+      <span>Project Escalion</span>
+    </div>
+    <div class="topbar-right">
+      <a href="https://github.com/prjktescalion" class="topbar-link" target="_blank">GitHub</a>
+      <div class="topbar-badge">NeuDel-II · NEU Project 3</div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="pre-label">Game Engine &amp; Studio Editor</div>
+      <h1 class="hero-title">
+        <span class="line-outline">Project</span>
+        <span class="line-orange">Escalion</span>
+        <span class="line-solid" style="font-size: 0.45em; letter-spacing: 0.06em; margin-top: 8px; color: rgba(245,240,232,0.5);">Coming Soon</span>
+      </h1>
+      <p class="hero-desc">
+        A <strong>pure-Rust</strong> game engine &amp; studio editor.<br>
+        Rendering · Physics · Audio · ECS<br>
+        Script in <strong>Rust, Java, or Python.</strong>
+      </p>
+      <div class="cta-row">
+        <button class="btn-primary" onclick="document.querySelector('.email-band').scrollIntoView({behavior:'smooth'})">
+          Get Notified
+        </button>
+        <a href="https://github.com/prjktescalion" class="btn-ghost" target="_blank">
+          View on GitHub <span class="arr">→</span>
+        </a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="icon-wrap">
+        <div class="icon-glow"></div>
+        <div class="icon-glow-outer"></div>
+        <div class="tick tl"></div>
+        <div class="tick tr"></div>
+        <div class="tick bl"></div>
+        <div class="tick br"></div>
+        <img class="icon-img" src="logo.png" alt="Escalion">
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-inner">
+      <div class="ticker-item"><span class="dot"></span>Rust Nightly</div>
+      <div class="ticker-item"><span class="dot"></span>GPUI (Zed)</div>
+      <div class="ticker-item"><span class="dot"></span>wgpu Renderer</div>
+      <div class="ticker-item"><span class="dot"></span>rapier2d Physics</div>
+      <div class="ticker-item"><span class="dot"></span>hecs ECS</div>
+      <div class="ticker-item"><span class="dot"></span>rodio Audio</div>
+      <div class="ticker-item"><span class="dot"></span>PyO3 Scripting</div>
+      <div class="ticker-item"><span class="dot"></span>JNI / GraalVM</div>
+      <div class="ticker-item"><span class="dot"></span>.ndscene Format</div>
+      <div class="ticker-item"><span class="dot"></span>Metal Shaders</div>
+      <div class="ticker-item"><span class="dot"></span>Tiled .tmj</div>
+      <div class="ticker-item"><span class="dot"></span>NEU Project 3</div>
+      <!-- duplicate for loop -->
+      <div class="ticker-item"><span class="dot"></span>Rust Nightly</div>
+      <div class="ticker-item"><span class="dot"></span>GPUI (Zed)</div>
+      <div class="ticker-item"><span class="dot"></span>wgpu Renderer</div>
+      <div class="ticker-item"><span class="dot"></span>rapier2d Physics</div>
+      <div class="ticker-item"><span class="dot"></span>hecs ECS</div>
+      <div class="ticker-item"><span class="dot"></span>rodio Audio</div>
+      <div class="ticker-item"><span class="dot"></span>PyO3 Scripting</div>
+      <div class="ticker-item"><span class="dot"></span>JNI / GraalVM</div>
+      <div class="ticker-item"><span class="dot"></span>.ndscene Format</div>
+      <div class="ticker-item"><span class="dot"></span>Metal Shaders</div>
+      <div class="ticker-item"><span class="dot"></span>Tiled .tmj</div>
+      <div class="ticker-item"><span class="dot"></span>NEU Project 3</div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="section">
+    <div class="eyebrow">What it is</div>
+    <h2 class="section-title">Two tools.<br><em>One pipeline.</em></h2>
+    <div class="features-grid">
+      <div class="feat">
+        <div class="feat-num">01 — ENGINE</div>
+        <span class="feat-icon">⚙️</span>
+        <div class="feat-name">Rust Runtime</div>
+        <p class="feat-desc">wgpu rendering, rapier2d physics, hecs ECS, and rodio audio. Tilemap loading for Tiled .tmj files. No web tech — native all the way down.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-num">02 — STUDIO</div>
+        <span class="feat-icon">🖥</span>
+        <div class="feat-name">Visual Editor</div>
+        <p class="feat-desc">Pure-Rust desktop app built on GPUI (Zed's UI framework). Canvas, asset browser, inspector, scene save/load — no Electron, no JS runtime.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-num">03 — SCRIPTING</div>
+        <span class="feat-icon">📝</span>
+        <div class="feat-name">Polyglot Logic</div>
+        <p class="feat-desc">Write game logic in Rust, Java, or Python. Scripts open in your editor of choice — VS Code, JetBrains, anything. The studio just gets out of your way.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-num">04 — SCENE</div>
+        <span class="feat-icon">🗂</span>
+        <div class="feat-name">.ndscene Format</div>
+        <p class="feat-desc">Scenes are plain JSON. Version-control friendly, human-readable, diffable. No binary blobs, no lock-in.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-num">05 — FEEL</div>
+        <span class="feat-icon">🎮</span>
+        <div class="feat-name">Game Feel Systems</div>
+        <p class="feat-desc">Coyote time, jump buffer, wall-slide. Camera lerp and screen shake. Metroidvania-style room loading. The details that separate a game from a prototype.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-num">06 — NARRATIVE</div>
+        <span class="feat-icon">⚔️</span>
+        <div class="feat-name">RPG Toolkit</div>
+        <p class="feat-desc">Turn-based battle FSM, branching dialogue with portraits, sprite animation state machine. Built for indie scope without enterprise overhead.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STACK + ROADMAP -->
+  <div class="section" style="padding-top: 0;">
+    <div class="two-col">
+      <div>
+        <div class="eyebrow">Tech Stack</div>
+        <h2 class="section-title" style="font-size: clamp(2.2rem,3.5vw,3.5rem); margin-bottom: 32px;">Under<br><em>the hood.</em></h2>
+        <table class="stack-table">
+          <tr><td>Engine Core</td><td>Rust <span class="tag">Nightly</span></td></tr>
+          <tr><td>Rendering</td><td>wgpu</td></tr>
+          <tr><td>Physics</td><td>rapier2d</td></tr>
+          <tr><td>Audio</td><td>rodio</td></tr>
+          <tr><td>ECS</td><td>hecs</td></tr>
+          <tr><td>Studio UI</td><td>GPUI <span class="tag">Zed</span></td></tr>
+          <tr><td>Python Bridge</td><td>PyO3</td></tr>
+          <tr><td>Java Bridge</td><td>JNI / GraalVM</td></tr>
+          <tr><td>Scene Format</td><td>JSON (.ndscene)</td></tr>
+          <tr><td>File Dialogs</td><td>rfd</td></tr>
+        </table>
+      </div>
+      <div>
+        <div class="eyebrow">Roadmap</div>
+        <h2 class="section-title" style="font-size: clamp(2.2rem,3.5vw,3.5rem); margin-bottom: 32px;">What's<br><em>shipping.</em></h2>
+        <ul class="roadmap-list">
+          <li class="roadmap-item done"><span class="check"></span>Studio editor — canvas, inspector, asset browser</li>
+          <li class="roadmap-item done"><span class="check"></span>Script forwarding to external editor</li>
+          <li class="roadmap-item done"><span class="check"></span>Pure-Rust frontend (GPUI)</li>
+          <li class="roadmap-item done"><span class="check"></span>Scene save / load (.ndscene)</li>
+          <li class="roadmap-item"><span class="check"></span>Engine runtime — wgpu + winit</li>
+          <li class="roadmap-item"><span class="check"></span>Entity Component System (hecs)</li>
+          <li class="roadmap-item"><span class="check"></span>2D physics (rapier2d)</li>
+          <li class="roadmap-item"><span class="check"></span>Tilemap — Tiled .tmj loader</li>
+          <li class="roadmap-item"><span class="check"></span>Sprite animation + state machine</li>
+          <li class="roadmap-item"><span class="check"></span>Camera — follow, lerp, screen shake</li>
+          <li class="roadmap-item"><span class="check"></span>Audio — SFX + looping BGM</li>
+          <li class="roadmap-item"><span class="check"></span>Python scripting (PyO3)</li>
+          <li class="roadmap-item"><span class="check"></span>Studio ↔ Engine live preview</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- EMAIL -->
+  <div class="email-band">
+    <h2 class="email-title">Get notified<br>when it <em>ships.</em></h2>
+    <p class="email-sub">Early access · Dev updates · Launch day</p>
+    <div class="email-row">
+      <input class="email-input" type="email" id="emailInput" placeholder="your@email.com" autocomplete="off">
+      <button class="email-btn" onclick="handleSignup()">Notify Me</button>
+    </div>
+    <div class="email-confirm" id="emailConfirm">✓ &nbsp;You're on the list.</div>
+  </div>
+
+  <footer>
+    <div class="footer-left">© 2025 NeuDel-II · NEU Project 3</div>
+    <div class="footer-links">
+      <a href="https://github.com/prjktescalion" target="_blank">GitHub</a>
+      <a href="#">Docs</a>
+      <a href="#">Contact</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+function handleSignup() {
+  const input = document.getElementById('emailInput');
+  const confirm = document.getElementById('emailConfirm');
+  if (!input.value || !input.value.includes('@')) {
+    input.style.borderColor = '#ff3333';
+    setTimeout(() => input.style.borderColor = '', 700);
+    return;
+  }
+  input.closest('.email-row').style.display = 'none';
+  confirm.style.display = 'block';
+}
+
+// subtle parallax on bg glow
+document.addEventListener('mousemove', e => {
+  const x = (e.clientX / window.innerWidth - 0.5) * 18;
+  const y = (e.clientY / window.innerHeight - 0.5) * 12;
+  document.querySelector('.bg').style.transform = `translate(${x}px,${y}px)`;
+});
+</script>
+
+</body>
+</html>
