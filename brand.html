@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Escalion — Brand Assets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Barlow+Condensed:wght@400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange:    #E84400;
+    --orange2:   #FF6A1A;
+    --black:     #0A0A0A;
+    --off-black: #111111;
+    --white:     #F5F0E8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Barlow Condensed', sans-serif;
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+
+  /* ── SHARED HALFTONE BACKGROUND (reusable brand element) ── */
+  .bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 75% 20%, rgba(232,68,0,0.16) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 50% at 10% 90%, rgba(232,68,0,0.07) 0%, transparent 55%),
+      var(--black);
+  }
+  .bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(232,68,0,0.22) 2px, transparent 2px);
+    background-size: 28px 28px;
+    mask-image: radial-gradient(ellipse 80% 70% at 75% 15%, black 0%, transparent 60%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 75% 15%, black 0%, transparent 60%);
+  }
+  .scanlines {
+    position: fixed; inset: 0; z-index: 1; pointer-events: none;
+    background: repeating-linear-gradient(to bottom,
+      transparent 0px, transparent 3px,
+      rgba(0,0,0,0.07) 3px, rgba(0,0,0,0.07) 4px);
+  }
+
+  .wrapper { position: relative; z-index: 10; }
+
+  /* ── TOPBAR ── */
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 56px;
+    border-bottom: 1px solid rgba(232,68,0,0.18);
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(10,10,10,0.82);
+    backdrop-filter: blur(10px);
+  }
+  .topbar-logo { display: flex; align-items: center; gap: 12px; }
+  .topbar-logo img { width: 36px; height: 36px; border-radius: 8px; }
+  .topbar-logo span {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .topbar-right { display: flex; align-items: center; gap: 24px; }
+  .topbar-link {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.72rem; letter-spacing: 0.15em;
+    color: rgba(245,240,232,0.4); text-decoration: none;
+    text-transform: uppercase; transition: color 0.2s;
+  }
+  .topbar-link:hover { color: var(--orange2); }
+  .topbar-badge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.14em;
+    color: var(--orange2); border: 1px solid rgba(232,68,0,0.4);
+    padding: 5px 14px; text-transform: uppercase;
+  }
+
+  /* ── PAGE HERO ── */
+  .brand-hero {
+    max-width: 1300px; margin: 0 auto;
+    padding: 90px 56px 40px;
+  }
+  .pre-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem; letter-spacing: 0.28em;
+    color: var(--orange2); text-transform: uppercase;
+    margin-bottom: 22px; display: flex; align-items: center; gap: 12px;
+  }
+  .pre-label::before {
+    content: ''; display: block; width: 28px; height: 2px;
+    background: var(--orange2); flex-shrink: 0;
+  }
+  .brand-hero h1 {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: clamp(3rem, 7vw, 6.5rem); line-height: 0.9;
+    letter-spacing: -0.01em; text-transform: uppercase;
+  }
+  .brand-hero h1 em { font-style: normal; color: var(--orange);
+    text-shadow: 0 0 50px rgba(232,68,0,0.55); }
+  .brand-hero p {
+    margin-top: 26px; font-size: 1.15rem; font-weight: 600;
+    letter-spacing: 0.05em; color: rgba(245,240,232,0.5);
+    text-transform: uppercase; line-height: 1.6; max-width: 620px;
+  }
+
+  /* ── SECTIONS ── */
+  .section { max-width: 1300px; margin: 0 auto; padding: 70px 56px; }
+  .eyebrow {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.72rem; letter-spacing: 0.28em;
+    color: var(--orange2); text-transform: uppercase;
+    margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+  }
+  .eyebrow::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--orange2); opacity: 0.4; }
+  .section-title {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: clamp(2.2rem, 4vw, 3.6rem); line-height: 0.92;
+    letter-spacing: -0.01em; text-transform: uppercase; margin-bottom: 44px;
+  }
+  .section-title em { font-style: normal; color: var(--orange); }
+  .lead {
+    font-size: 1.05rem; color: rgba(245,240,232,0.55);
+    line-height: 1.65; max-width: 680px; margin-bottom: 40px; font-weight: 400;
+  }
+  .lead strong { color: var(--white); font-weight: 700; }
+
+  .divider { max-width: 1300px; margin: 0 auto; height: 1px;
+    background: rgba(232,68,0,0.12); }
+
+  /* ── LOGO / ICON SECTION ── */
+  .logo-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: rgba(232,68,0,0.10);
+    border: 1px solid rgba(232,68,0,0.10);
+  }
+  .logo-cell {
+    background: var(--off-black); padding: 44px 32px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 22px; min-height: 260px; position: relative;
+  }
+  .logo-cell.on-white { background: var(--white); }
+  .logo-cell.on-orange { background: var(--orange); }
+  .logo-cell .icon-lg { width: 128px; height: 128px; border-radius: 22%;
+    filter: drop-shadow(0 12px 32px rgba(232,68,0,0.4)); }
+  .logo-cell .icon-md { width: 84px; height: 84px; border-radius: 22%; }
+  .cell-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: rgba(245,240,232,0.4);
+  }
+  .on-white .cell-label, .on-orange .cell-label { color: rgba(10,10,10,0.55); }
+
+  /* clear space demo */
+  .clearspace {
+    background: var(--off-black); padding: 44px; margin-top: 1px;
+    border: 1px solid rgba(232,68,0,0.10); display: flex; gap: 44px;
+    align-items: center; flex-wrap: wrap;
+  }
+  .cs-box {
+    position: relative; padding: 40px;
+    outline: 1px dashed rgba(232,68,0,0.4); outline-offset: 0;
+  }
+  .cs-box::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      linear-gradient(rgba(232,68,0,0.05) 1px, transparent 1px) 0 0 / 20px 20px,
+      linear-gradient(90deg, rgba(232,68,0,0.05) 1px, transparent 1px) 0 0 / 20px 20px;
+    pointer-events: none;
+  }
+  .cs-box img { width: 100px; height: 100px; border-radius: 22%; display: block; position: relative; }
+  .cs-note h4 {
+    font-family: 'Black Han Sans', sans-serif; font-size: 1.3rem;
+    text-transform: uppercase; margin-bottom: 10px;
+  }
+  .cs-note p { font-size: 0.98rem; color: rgba(245,240,232,0.5); line-height: 1.6; max-width: 360px; }
+
+  /* do / dont */
+  .dodont { display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    background: rgba(232,68,0,0.10); border: 1px solid rgba(232,68,0,0.10); margin-top: 40px; }
+  .dd-cell { background: var(--off-black); padding: 28px 30px; }
+  .dd-head { display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+    font-family: 'Share Tech Mono', monospace; font-size: 0.75rem;
+    letter-spacing: 0.14em; text-transform: uppercase; }
+  .dd-head.yes { color: #4ade80; }
+  .dd-head.no { color: #ff5a5a; }
+  .dd-head .mk { width: 18px; height: 18px; display: grid; place-items: center;
+    border: 1.5px solid currentColor; font-weight: 700; }
+  .dd-cell ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .dd-cell li { font-size: 0.96rem; color: rgba(245,240,232,0.55); line-height: 1.5;
+    padding-left: 16px; position: relative; }
+  .dd-cell li::before { content: '—'; position: absolute; left: 0; color: rgba(232,68,0,0.5); }
+
+  /* ── COLOR PALETTE ── */
+  .swatches { display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 1px; background: rgba(232,68,0,0.10); border: 1px solid rgba(232,68,0,0.10); }
+  .swatch { display: flex; flex-direction: column; }
+  .swatch-color { height: 160px; position: relative; cursor: pointer; }
+  .swatch-color .copy-hint {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em;
+    text-transform: uppercase; opacity: 0; transition: opacity 0.2s;
+  }
+  .swatch-color:hover .copy-hint { opacity: 1; }
+  .swatch-info { background: var(--off-black); padding: 18px 20px; }
+  .swatch-name {
+    font-family: 'Black Han Sans', sans-serif; font-size: 1rem;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .swatch-var, .swatch-hex, .swatch-rgb {
+    font-family: 'Share Tech Mono', monospace; font-size: 0.72rem;
+    letter-spacing: 0.06em; color: rgba(245,240,232,0.42); line-height: 1.8;
+  }
+  .swatch-hex { color: var(--orange2); }
+  .usage-table { width: 100%; border-collapse: collapse; margin-top: 40px; }
+  .usage-table tr { border-bottom: 1px solid rgba(232,68,0,0.08); }
+  .usage-table td { padding: 14px 6px; font-size: 0.98rem; vertical-align: middle; }
+  .usage-table td:first-child { width: 44px; }
+  .usage-table .chip { width: 26px; height: 26px; border-radius: 5px; display: inline-block; }
+  .usage-table td:nth-child(2) { font-family:'Share Tech Mono',monospace; font-size:0.74rem;
+    letter-spacing:0.1em; text-transform:uppercase; color:rgba(245,240,232,0.5); width: 26%; }
+  .usage-table td:last-child { color: rgba(245,240,232,0.6); }
+
+  /* ── TYPOGRAPHY ── */
+  .type-block { border: 1px solid rgba(232,68,0,0.10); background: var(--off-black);
+    padding: 40px 40px 34px; margin-bottom: 1px; }
+  .type-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 16px; margin-bottom: 26px; }
+  .type-meta .tf-name {
+    font-family: 'Share Tech Mono', monospace; font-size: 0.78rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--orange2); }
+  .type-meta .tf-role { font-size: 0.95rem; color: rgba(245,240,232,0.45); }
+  .type-meta .tf-tag {
+    font-family:'Share Tech Mono',monospace; font-size:0.66rem; letter-spacing:0.1em;
+    background: rgba(232,68,0,0.14); color: var(--orange2); padding: 3px 10px; text-transform: uppercase; }
+  .spec-display { font-family: 'Black Han Sans', sans-serif; font-size: clamp(2.6rem, 6vw, 5rem);
+    line-height: 0.95; text-transform: uppercase; letter-spacing: -0.01em; }
+  .spec-body { font-family: 'Barlow Condensed', sans-serif; font-size: 1.6rem; font-weight: 600;
+    letter-spacing: 0.04em; line-height: 1.4; color: rgba(245,240,232,0.75); }
+  .spec-body .w900 { font-weight: 900; }
+  .spec-mono { font-family: 'Share Tech Mono', monospace; font-size: 1.15rem;
+    letter-spacing: 0.1em; color: rgba(245,240,232,0.7); }
+  .glyphs { margin-top: 22px; font-size: 1.35rem; color: rgba(245,240,232,0.4);
+    letter-spacing: 0.08em; word-spacing: 4px; }
+  .glyphs.disp { font-family:'Black Han Sans',sans-serif; }
+  .glyphs.mono { font-family:'Share Tech Mono',monospace; }
+
+  /* ── DESIGN ELEMENTS ── */
+  .elements-grid { display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 1px; background: rgba(232,68,0,0.10); border: 1px solid rgba(232,68,0,0.10); }
+  .el-cell { background: var(--off-black); padding: 32px; }
+  .el-title { font-family:'Black Han Sans',sans-serif; font-size: 1.2rem;
+    text-transform: uppercase; margin-bottom: 6px; }
+  .el-desc { font-size: 0.92rem; color: rgba(245,240,232,0.42); line-height: 1.5; margin-bottom: 20px; }
+  .el-demo { height: 120px; border: 1px solid rgba(232,68,0,0.14); position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center; gap: 20px; background: var(--black); }
+  .demo-halftone { background-image: radial-gradient(circle, rgba(232,68,0,0.4) 2px, transparent 2px);
+    background-size: 22px 22px; }
+  .demo-scan { background: repeating-linear-gradient(to bottom, transparent 0 3px, rgba(255,255,255,0.06) 3px 4px); }
+  .demo-glow { background: radial-gradient(circle at center, rgba(232,68,0,0.5) 0%, transparent 60%); }
+  .ex-btn-primary {
+    background: var(--orange); color: var(--black);
+    font-family:'Barlow Condensed',sans-serif; font-weight: 900; font-size: 0.95rem;
+    letter-spacing: 0.15em; text-transform: uppercase; border: none; padding: 13px 32px; cursor: crosshair;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px)); }
+  .ex-tag { display:inline-block; background: rgba(232,68,0,0.14); color: var(--orange2);
+    font-family:'Share Tech Mono',monospace; font-size: 0.72rem; letter-spacing: 0.1em; padding: 4px 12px; }
+  .ex-tick-box { width: 90px; height: 90px; position: relative; }
+  .ex-tick { position:absolute; width: 18px; height: 18px; border-color: var(--orange2); border-style: solid; opacity: 0.7; }
+  .ex-tick.tl { top:0; left:0; border-width: 2px 0 0 2px; }
+  .ex-tick.tr { top:0; right:0; border-width: 2px 2px 0 0; }
+  .ex-tick.bl { bottom:0; left:0; border-width: 0 0 2px 2px; }
+  .ex-tick.br { bottom:0; right:0; border-width: 0 2px 2px 0; }
+  .ex-tick-box .core { position:absolute; inset: 26px; border: 1px solid rgba(232,68,0,0.3); }
+
+  /* ═══════════════ SPLASH / BANNER / POSTER EXAMPLES ═══════════════ */
+  .canvas-note {
+    font-family:'Share Tech Mono',monospace; font-size: 0.72rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: rgba(245,240,232,0.35);
+    margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .canvas-note .dim { color: var(--orange2); }
+  .shot { margin-bottom: 64px; }
+
+  /* generic composition primitives reused across shots */
+  .comp {
+    position: relative; overflow: hidden; border: 1px solid rgba(232,68,0,0.18);
+    background: var(--black); isolation: isolate;
+  }
+  .comp .layer-halftone {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle, rgba(232,68,0,0.32) 2.4px, transparent 2.4px);
+    background-size: 30px 30px; z-index: 0;
+  }
+  .comp .layer-halftone.fade-r {
+    mask-image: linear-gradient(90deg, black 0%, transparent 70%);
+    -webkit-mask-image: linear-gradient(90deg, black 0%, transparent 70%); }
+  .comp .layer-halftone.fade-radial {
+    mask-image: radial-gradient(ellipse 70% 70% at 70% 30%, black 0%, transparent 65%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 70% at 70% 30%, black 0%, transparent 65%); }
+  .comp .layer-glow {
+    position: absolute; z-index: 0;
+    background: radial-gradient(circle, rgba(232,68,0,0.35) 0%, transparent 60%); }
+  .comp .layer-scan {
+    position: absolute; inset: 0; z-index: 3; pointer-events: none;
+    background: repeating-linear-gradient(to bottom, transparent 0 3px, rgba(0,0,0,0.09) 3px 4px); }
+  .comp .layer-grad {
+    position:absolute; inset:0; z-index:0;
+    background: radial-gradient(ellipse 60% 80% at 78% 40%, rgba(232,68,0,0.28) 0%, transparent 55%); }
+  .comp > * { position: relative; z-index: 2; }
+
+  /* --- 1. Wide banner (1200×400 feel) --- */
+  .shot-banner { aspect-ratio: 3 / 1; display: flex; align-items: center;
+    padding: 0 6%; gap: 6%; }
+  .shot-banner .b-icon { width: 30%; max-width: 240px; aspect-ratio: 1; flex-shrink: 0;
+    display:flex; align-items:center; justify-content:center; }
+  .shot-banner .b-icon img { width: 100%; border-radius: 22%;
+    filter: drop-shadow(0 14px 44px rgba(232,68,0,0.5)); }
+  .shot-banner .b-text { flex: 1; }
+  .shot-banner .b-eyebrow { font-family:'Share Tech Mono',monospace; font-size: clamp(0.6rem,1.4vw,0.85rem);
+    letter-spacing: 0.28em; color: var(--orange2); text-transform: uppercase; margin-bottom: 14px; }
+  .shot-banner .b-title { font-family:'Black Han Sans',sans-serif; text-transform: uppercase;
+    font-size: clamp(2rem, 6.5vw, 5rem); line-height: 0.88; }
+  .shot-banner .b-title em { font-style: normal; color: var(--orange);
+    text-shadow: 0 0 40px rgba(232,68,0,0.6); }
+  .shot-banner .b-sub { margin-top: 16px; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; color: rgba(245,240,232,0.5); font-size: clamp(0.8rem,1.8vw,1.15rem); }
+
+  /* --- 2. Social square (1080×1080 feel) --- */
+  .shot-square { aspect-ratio: 1 / 1; max-width: 620px; margin: 0 auto;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 8%; }
+  .shot-square .sq-icon { width: 40%; max-width: 220px; margin-bottom: 34px; }
+  .shot-square .sq-icon img { width: 100%; border-radius: 22%;
+    filter: drop-shadow(0 16px 50px rgba(232,68,0,0.55)); }
+  .shot-square .sq-eyebrow { font-family:'Share Tech Mono',monospace; font-size: 0.78rem;
+    letter-spacing: 0.3em; color: var(--orange2); text-transform: uppercase; margin-bottom: 18px; }
+  .shot-square .sq-title { font-family:'Black Han Sans',sans-serif; text-transform: uppercase;
+    font-size: clamp(2.4rem, 8vw, 4.2rem); line-height: 0.9; }
+  .shot-square .sq-title em { font-style: normal; color: var(--orange);
+    text-shadow: 0 0 45px rgba(232,68,0,0.6); }
+  .shot-square .sq-rule { width: 60px; height: 3px; background: var(--orange); margin: 26px auto; }
+  .shot-square .sq-sub { font-family:'Share Tech Mono',monospace; font-size: 0.82rem;
+    letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,240,232,0.45); }
+
+  /* --- 3. Blog header / OG image (1200×630 feel) --- */
+  .shot-og { aspect-ratio: 40 / 21; display: flex; flex-direction: column; justify-content: space-between;
+    padding: 5% 6%; }
+  .shot-og .og-top { display: flex; align-items: center; justify-content: space-between; }
+  .shot-og .og-brand { display: flex; align-items: center; gap: 14px; }
+  .shot-og .og-brand img { width: 46px; height: 46px; border-radius: 10px; }
+  .shot-og .og-brand span { font-family:'Black Han Sans',sans-serif; text-transform: uppercase;
+    font-size: 1.05rem; letter-spacing: 0.08em; }
+  .shot-og .og-badge { font-family:'Share Tech Mono',monospace; font-size: 0.7rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--orange2); border: 1px solid rgba(232,68,0,0.4); padding: 6px 14px; }
+  .shot-og .og-eyebrow { font-family:'Share Tech Mono',monospace; font-size: clamp(0.65rem,1.3vw,0.85rem);
+    letter-spacing: 0.28em; color: var(--orange2); text-transform: uppercase; margin-bottom: 16px; }
+  .shot-og .og-title { font-family:'Black Han Sans',sans-serif; text-transform: uppercase;
+    font-size: clamp(1.8rem, 5.5vw, 4rem); line-height: 0.92; max-width: 90%; }
+  .shot-og .og-title em { font-style: normal; color: var(--orange); }
+  .shot-og .og-foot { display: flex; align-items: center; gap: 12px;
+    font-family:'Share Tech Mono',monospace; font-size: clamp(0.6rem,1.2vw,0.78rem);
+    letter-spacing: 0.16em; text-transform: uppercase; color: rgba(245,240,232,0.4); }
+  .shot-og .og-foot .dot { width: 5px; height: 5px; background: var(--orange); border-radius: 50%; }
+
+  /* --- 4. Vertical poster / story (1080×1920 feel) --- */
+  .shot-poster { aspect-ratio: 9 / 16; max-width: 400px; margin: 0 auto;
+    display: flex; flex-direction: column; padding: 12% 9%; }
+  .shot-poster .p-top { font-family:'Share Tech Mono',monospace; font-size: 0.72rem;
+    letter-spacing: 0.24em; text-transform: uppercase; color: rgba(245,240,232,0.4);
+    display: flex; justify-content: space-between; }
+  .shot-poster .p-mid { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .shot-poster .p-icon { width: 55%; margin-bottom: 40px; }
+  .shot-poster .p-icon img { width: 100%; border-radius: 22%; filter: drop-shadow(0 16px 50px rgba(232,68,0,0.55)); }
+  .shot-poster .p-title { font-family:'Black Han Sans',sans-serif; text-transform: uppercase;
+    font-size: clamp(2.4rem, 12vw, 3.4rem); line-height: 0.86; }
+  .shot-poster .p-title .out { -webkit-text-stroke: 2px var(--white); color: transparent; display: block; }
+  .shot-poster .p-title em { font-style: normal; color: var(--orange); display: block;
+    text-shadow: 0 0 45px rgba(232,68,0,0.6); }
+  .shot-poster .p-cta { margin-top: 34px; }
+  .shot-poster .p-bottom { text-align: center; font-family:'Share Tech Mono',monospace;
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,240,232,0.4); }
+
+  /* --- 5. Minimal wordmark strip / email header (600×200 feel) --- */
+  .shot-strip { aspect-ratio: 3 / 1; max-width: 640px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: center; gap: 20px; padding: 0 8%; }
+  .shot-strip img { width: 64px; height: 64px; border-radius: 14px;
+    filter: drop-shadow(0 8px 24px rgba(232,68,0,0.4)); }
+  .shot-strip .s-word { font-family:'Black Han Sans',sans-serif; text-transform: uppercase;
+    font-size: clamp(1.4rem, 5vw, 2.4rem); line-height: 1; letter-spacing: 0.02em; }
+  .shot-strip .s-word em { font-style: normal; color: var(--orange); }
+  .shot-strip .s-word small { display: block; font-family:'Share Tech Mono',monospace;
+    font-size: 0.5em; letter-spacing: 0.18em; color: var(--orange2); margin-top: 6px; }
+
+  /* --- 6. Quote / announcement card (16×9) --- */
+  .shot-quote { aspect-ratio: 16 / 9; display: flex; flex-direction: column; justify-content: center;
+    padding: 6% 8%; }
+  .shot-quote .q-mark { font-family:'Black Han Sans',sans-serif; color: var(--orange);
+    font-size: clamp(3rem,10vw,6rem); line-height: 0.6; opacity: 0.5; }
+  .shot-quote .q-text { font-family:'Barlow Condensed',sans-serif; font-weight: 900;
+    text-transform: uppercase; font-size: clamp(1.4rem, 4.5vw, 3rem); line-height: 1.05;
+    letter-spacing: 0.01em; margin: 8px 0 24px; max-width: 85%; }
+  .shot-quote .q-text .hl { color: var(--orange); }
+  .shot-quote .q-by { display: flex; align-items: center; gap: 12px; }
+  .shot-quote .q-by img { width: 40px; height: 40px; border-radius: 9px; }
+  .shot-quote .q-by span { font-family:'Share Tech Mono',monospace; font-size: 0.76rem;
+    letter-spacing: 0.14em; text-transform: uppercase; color: rgba(245,240,232,0.5); }
+
+  /* download row */
+  .dl-row { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 12px; }
+  .dl-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family:'Share Tech Mono',monospace; font-size: 0.78rem; letter-spacing: 0.12em;
+    text-transform: uppercase; text-decoration: none; color: var(--white);
+    border: 1px solid rgba(232,68,0,0.4); padding: 12px 20px; transition: background 0.2s, color 0.2s; }
+  .dl-btn:hover { background: var(--orange); color: var(--black); border-color: var(--orange); }
+  .dl-btn .arr { color: var(--orange2); transition: color 0.2s; }
+  .dl-btn:hover .arr { color: var(--black); }
+
+  .toast {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--orange); color: var(--black); font-family:'Share Tech Mono',monospace;
+    font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 12px 22px;
+    z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.2s, transform 0.2s;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px)); }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ── FOOTER ── */
+  footer { border-top: 1px solid rgba(255,255,255,0.05); padding: 30px 56px;
+    display: flex; align-items: center; justify-content: space-between; margin-top: 40px; }
+  .footer-left { font-family:'Share Tech Mono',monospace; font-size: 0.7rem;
+    letter-spacing: 0.12em; color: rgba(245,240,232,0.18); text-transform: uppercase; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { font-family:'Share Tech Mono',monospace; font-size: 0.7rem;
+    letter-spacing: 0.12em; color: rgba(245,240,232,0.22); text-decoration: none;
+    text-transform: uppercase; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--orange2); }
+
+  @media (max-width: 900px) {
+    .topbar { padding: 18px 22px; }
+    .brand-hero, .section { padding-left: 22px; padding-right: 22px; }
+    .logo-grid, .swatches, .elements-grid, .dodont { grid-template-columns: 1fr 1fr; }
+    .swatches { grid-template-columns: 1fr 1fr; }
+    .clearspace { flex-direction: column; align-items: flex-start; }
+    .shot-banner { flex-direction: column; text-align: center; justify-content: center; }
+    .shot-banner .b-icon { width: 42%; }
+  }
+  @media (max-width: 560px) {
+    .logo-grid, .swatches, .elements-grid, .dodont { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="scanlines"></div>
+
+<div class="wrapper">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-logo">
+      <img src="logo.png" alt="Escalion logo">
+      <span>Project Escalion</span>
+    </div>
+    <div class="topbar-right">
+      <a href="index.html" class="topbar-link">← Home</a>
+      <a href="https://github.com/prjktescalion" class="topbar-link" target="_blank">GitHub</a>
+      <div class="topbar-badge">Brand Kit v1</div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="brand-hero">
+    <div class="pre-label">Brand Assets &amp; Guidelines</div>
+    <h1>Brand<br><em>Kit.</em></h1>
+    <p>
+      Everything you need to represent <strong>Project&nbsp;Escalion</strong> —
+      the icon, colors, type, and design language, plus ready-made
+      splash screens you can screenshot for blogs, banners, posters, and headers.
+    </p>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ─────────── LOGO / ICON ─────────── -->
+  <section class="section">
+    <div class="eyebrow">01 — The Mark</div>
+    <h2 class="section-title">Icon &amp; <em>Logo.</em></h2>
+    <p class="lead">
+      The Escalion mark is a <strong>directional D-pad glyph</strong> in white, set on a halftone-dot field
+      that fades from signal orange into black. It reads as a game controller and an editor cursor at once.
+      Always use the mark with its <strong>rounded-square (22% radius)</strong> container. Do not extract the
+      glyph on its own for primary use.
+    </p>
+
+    <div class="logo-grid">
+      <div class="logo-cell">
+        <img class="icon-lg" src="logo.png" alt="Escalion icon on black">
+        <span class="cell-label">Primary · on black</span>
+      </div>
+      <div class="logo-cell on-white">
+        <img class="icon-md" src="logo.png" alt="Escalion icon on white">
+        <span class="cell-label">On light surface</span>
+      </div>
+      <div class="logo-cell on-orange">
+        <img class="icon-md" src="logo.png" alt="Escalion icon on orange">
+        <span class="cell-label">On orange surface</span>
+      </div>
+    </div>
+
+    <!-- clear space -->
+    <div class="clearspace">
+      <div class="cs-box"><img src="logo.png" alt="Clear space demo"></div>
+      <div class="cs-note">
+        <h4>Clear space</h4>
+        <p>Keep a minimum margin of <strong>40% of the icon height</strong> clear on all sides.
+          Nothing — text, edges, or other logos — should intrude on this zone.
+          Minimum display size is <strong>24&nbsp;px</strong> square.</p>
+      </div>
+    </div>
+
+    <!-- do / dont -->
+    <div class="dodont">
+      <div class="dd-cell">
+        <div class="dd-head yes"><span class="mk">✓</span> Do</div>
+        <ul>
+          <li>Keep the rounded-square container intact</li>
+          <li>Use on deep black, orange, or off-white surfaces</li>
+          <li>Preserve the drop shadow / glow on dark backgrounds</li>
+          <li>Scale proportionally — never stretch</li>
+        </ul>
+      </div>
+      <div class="dd-cell">
+        <div class="dd-head no"><span class="mk">✕</span> Don't</div>
+        <ul>
+          <li>Recolor the glyph or the container</li>
+          <li>Rotate, skew, or add extra effects</li>
+          <li>Place on busy photos without a scrim</li>
+          <li>Crop the corners or square off the radius</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="dl-row" style="margin-top:32px;">
+      <a class="dl-btn" href="logo.png" download>Download icon (PNG) <span class="arr">↓</span></a>
+      <a class="dl-btn" href="logo.png" target="_blank">Open full size <span class="arr">→</span></a>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ─────────── COLOR ─────────── -->
+  <section class="section">
+    <div class="eyebrow">02 — Palette</div>
+    <h2 class="section-title">Colors.</h2>
+    <p class="lead">
+      A high-contrast, near-monochrome system: <strong>signal orange</strong> against
+      deep black, warmed by a single off-white for text. Orange is an accent — use it with
+      restraint so it always reads as <em>signal</em>. Click any swatch to copy its hex.
+    </p>
+
+    <div class="swatches">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#E84400" data-hex="#E84400">
+          <span class="copy-hint" style="color:#0A0A0A">Click to copy</span>
+        </div>
+        <div class="swatch-info">
+          <div class="swatch-name">Signal Orange</div>
+          <div class="swatch-var">--orange</div>
+          <div class="swatch-hex">#E84400</div>
+          <div class="swatch-rgb">rgb(232, 68, 0)</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#FF6A1A" data-hex="#FF6A1A">
+          <span class="copy-hint" style="color:#0A0A0A">Click to copy</span>
+        </div>
+        <div class="swatch-info">
+          <div class="swatch-name">Ember</div>
+          <div class="swatch-var">--orange2</div>
+          <div class="swatch-hex">#FF6A1A</div>
+          <div class="swatch-rgb">rgb(255, 106, 26)</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#0A0A0A" data-hex="#0A0A0A">
+          <span class="copy-hint" style="color:#F5F0E8">Click to copy</span>
+        </div>
+        <div class="swatch-info">
+          <div class="swatch-name">Void</div>
+          <div class="swatch-var">--black</div>
+          <div class="swatch-hex">#0A0A0A</div>
+          <div class="swatch-rgb">rgb(10, 10, 10)</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#111111" data-hex="#111111">
+          <span class="copy-hint" style="color:#F5F0E8">Click to copy</span>
+        </div>
+        <div class="swatch-info">
+          <div class="swatch-name">Panel</div>
+          <div class="swatch-var">--off-black</div>
+          <div class="swatch-hex">#111111</div>
+          <div class="swatch-rgb">rgb(17, 17, 17)</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#F5F0E8" data-hex="#F5F0E8">
+          <span class="copy-hint" style="color:#0A0A0A">Click to copy</span>
+        </div>
+        <div class="swatch-info">
+          <div class="swatch-name">Bone</div>
+          <div class="swatch-var">--white</div>
+          <div class="swatch-hex">#F5F0E8</div>
+          <div class="swatch-rgb">rgb(245, 240, 232)</div>
+        </div>
+      </div>
+    </div>
+
+    <table class="usage-table">
+      <tr><td><span class="chip" style="background:#0A0A0A;border:1px solid rgba(255,255,255,0.1)"></span></td><td>Void</td><td>Primary background — the canvas everything sits on.</td></tr>
+      <tr><td><span class="chip" style="background:#111111"></span></td><td>Panel</td><td>Cards, tables, and raised surfaces one step above the void.</td></tr>
+      <tr><td><span class="chip" style="background:#E84400"></span></td><td>Signal Orange</td><td>Primary accent — CTAs, active states, the glow, key headline words.</td></tr>
+      <tr><td><span class="chip" style="background:#FF6A1A"></span></td><td>Ember</td><td>Hover / hot state, mono labels, thin rules and ticks.</td></tr>
+      <tr><td><span class="chip" style="background:#F5F0E8"></span></td><td>Bone</td><td>All body and heading text. Never pure white — always warm.</td></tr>
+    </table>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ─────────── TYPOGRAPHY ─────────── -->
+  <section class="section">
+    <div class="eyebrow">03 — Type</div>
+    <h2 class="section-title">Typography.</h2>
+    <p class="lead">
+      Three typefaces, three jobs. <strong>Black Han Sans</strong> shouts (display).
+      <strong>Barlow Condensed</strong> speaks (body &amp; UI). <strong>Share Tech Mono</strong>
+      annotates (labels, metadata, code). Headings and labels are set in
+      <strong>UPPERCASE</strong>.
+    </p>
+
+    <div class="type-block">
+      <div class="type-meta">
+        <span class="tf-name">Black Han Sans</span>
+        <span class="tf-role">Display / Headlines</span>
+        <span class="tf-tag">Uppercase</span>
+      </div>
+      <div class="spec-display">Project Escalion</div>
+      <div class="glyphs disp">A B C D E F G H I J K · 0 1 2 3 4 5 6 7 8 9</div>
+    </div>
+
+    <div class="type-block">
+      <div class="type-meta">
+        <span class="tf-name">Barlow Condensed</span>
+        <span class="tf-role">Body / Interface</span>
+        <span class="tf-tag">400 · 600 · 700 · 900</span>
+      </div>
+      <div class="spec-body">
+        A <span class="w900">pure-Rust</span> game engine &amp; studio editor.
+        Rendering, physics, audio, ECS — script in Rust, Java, or Python.
+      </div>
+      <div class="glyphs">AaBbCcDdEe · The quick brown fox · 1234567890</div>
+    </div>
+
+    <div class="type-block" style="margin-bottom:0;">
+      <div class="type-meta">
+        <span class="tf-name">Share Tech Mono</span>
+        <span class="tf-role">Labels / Metadata / Code</span>
+        <span class="tf-tag">Tracked +0.15em</span>
+      </div>
+      <div class="spec-mono">NEUDEL-II · NEU PROJECT 3 · .NDSCENE · WGPU · v1.0.0</div>
+      <div class="glyphs mono">abcdef · ABCDEF · {} [] () &lt;/&gt; · 0123456789</div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ─────────── DESIGN ELEMENTS ─────────── -->
+  <section class="section">
+    <div class="eyebrow">04 — Language</div>
+    <h2 class="section-title">Design <em>Elements.</em></h2>
+    <p class="lead">
+      The recurring building blocks. Layer these — halftone under content, scanlines over
+      everything, glow behind the mark — to keep every surface unmistakably Escalion.
+    </p>
+
+    <div class="elements-grid">
+      <div class="el-cell">
+        <div class="el-title">Halftone field</div>
+        <div class="el-desc">Orange dot grid, 28px pitch, masked to fade toward the edges. The signature texture.</div>
+        <div class="el-demo demo-halftone"></div>
+      </div>
+      <div class="el-cell">
+        <div class="el-title">Scanlines</div>
+        <div class="el-desc">1px dark lines every 4px, laid over the whole frame for a CRT / terminal feel.</div>
+        <div class="el-demo demo-scan"></div>
+      </div>
+      <div class="el-cell">
+        <div class="el-title">Orange glow</div>
+        <div class="el-desc">Radial bloom behind the mark and headline words. Warmth and focus.</div>
+        <div class="el-demo demo-glow"></div>
+      </div>
+      <div class="el-cell">
+        <div class="el-title">Corner ticks</div>
+        <div class="el-desc">Bracketing marks that frame the icon like a reticle / viewfinder.</div>
+        <div class="el-demo">
+          <div class="ex-tick-box">
+            <span class="ex-tick tl"></span><span class="ex-tick tr"></span>
+            <span class="ex-tick bl"></span><span class="ex-tick br"></span>
+            <span class="core"></span>
+          </div>
+        </div>
+      </div>
+      <div class="el-cell">
+        <div class="el-title">Clipped button</div>
+        <div class="el-desc">Solid orange CTA with notched top-right / bottom-left corners.</div>
+        <div class="el-demo"><button class="ex-btn-primary">Get Notified</button></div>
+      </div>
+      <div class="el-cell">
+        <div class="el-title">Mono tag</div>
+        <div class="el-desc">Tracked monospace pill on a faint orange wash — for tech / metadata.</div>
+        <div class="el-demo"><span class="ex-tag">RUST NIGHTLY</span><span class="ex-tag">GPUI · ZED</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════ SPLASH SCREENS ═══════════════ -->
+  <section class="section">
+    <div class="eyebrow">05 — Ready to Screenshot</div>
+    <h2 class="section-title">Splash <em>Screens.</em></h2>
+    <p class="lead">
+      Prebuilt compositions for blogs, socials, and docs. Each is a self-contained frame at a common
+      aspect ratio — just <strong>screenshot the block</strong> and drop it in. All are built from the
+      elements above, so they stay on-brand automatically.
+    </p>
+
+    <!-- 1. WIDE BANNER -->
+    <div class="shot">
+      <div class="canvas-note">Wide banner <span class="dim">— 3:1 · repo / blog header</span></div>
+      <div class="comp shot-banner">
+        <div class="layer-halftone fade-r"></div>
+        <div class="layer-glow" style="inset:-10% -10% -10% 40%;"></div>
+        <div class="layer-scan"></div>
+        <div class="b-icon"><img src="logo.png" alt="Escalion"></div>
+        <div class="b-text">
+          <div class="b-eyebrow">Game Engine &amp; Studio Editor</div>
+          <div class="b-title">Project<br><em>Escalion</em></div>
+          <div class="b-sub">Pure-Rust · Native all the way down</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. SOCIAL SQUARE -->
+    <div class="shot">
+      <div class="canvas-note">Social square <span class="dim">— 1:1 · Instagram / LinkedIn post</span></div>
+      <div class="comp shot-square">
+        <div class="layer-halftone fade-radial"></div>
+        <div class="layer-glow" style="inset:5% 20% 40% 20%;"></div>
+        <div class="layer-scan"></div>
+        <div class="sq-icon"><img src="logo.png" alt="Escalion"></div>
+        <div class="sq-eyebrow">Coming Soon</div>
+        <div class="sq-title">Project<br><em>Escalion</em></div>
+        <div class="sq-rule"></div>
+        <div class="sq-sub">A pure-Rust game engine</div>
+      </div>
+    </div>
+
+    <!-- 3. OG / BLOG HEADER -->
+    <div class="shot">
+      <div class="canvas-note">Blog / OG image <span class="dim">— 1.91:1 · link preview &amp; article header</span></div>
+      <div class="comp shot-og">
+        <div class="layer-grad"></div>
+        <div class="layer-halftone fade-radial" style="opacity:0.7;"></div>
+        <div class="layer-scan"></div>
+        <div class="og-top">
+          <div class="og-brand"><img src="logo.png" alt=""><span>Project Escalion</span></div>
+          <div class="og-badge">Dev Log</div>
+        </div>
+        <div>
+          <div class="og-eyebrow">Building the Studio</div>
+          <div class="og-title">Shipping a pure-Rust<br>editor on <em>GPUI</em></div>
+        </div>
+        <div class="og-foot"><span class="dot"></span>NeuDel-II · NEU Project 3 &nbsp;·&nbsp; prjktescalion.github.io</div>
+      </div>
+    </div>
+
+    <!-- 4. VERTICAL POSTER / STORY -->
+    <div class="shot">
+      <div class="canvas-note">Vertical poster <span class="dim">— 9:16 · story / phone wallpaper</span></div>
+      <div class="comp shot-poster">
+        <div class="layer-halftone fade-radial"></div>
+        <div class="layer-glow" style="inset:20% 10% 50% 10%;"></div>
+        <div class="layer-scan"></div>
+        <div class="p-top"><span>EST. 2025</span><span>NEU · P3</span></div>
+        <div class="p-mid">
+          <div class="p-icon"><img src="logo.png" alt="Escalion"></div>
+          <div class="p-title"><span class="out">Project</span><em>Escalion</em></div>
+          <div class="p-cta"><button class="ex-btn-primary">Get Notified</button></div>
+        </div>
+        <div class="p-bottom">Rust · wgpu · rapier2d · hecs</div>
+      </div>
+    </div>
+
+    <!-- 5. WORDMARK STRIP -->
+    <div class="shot">
+      <div class="canvas-note">Wordmark strip <span class="dim">— 3:1 · email / doc header, avatar banner</span></div>
+      <div class="comp shot-strip">
+        <div class="layer-halftone" style="opacity:0.4;mask-image:linear-gradient(90deg,black,transparent);-webkit-mask-image:linear-gradient(90deg,black,transparent);"></div>
+        <div class="layer-scan"></div>
+        <img src="logo.png" alt="Escalion">
+        <div class="s-word">Project <em>Escalion</em><small>Game Engine &amp; Studio</small></div>
+      </div>
+    </div>
+
+    <!-- 6. QUOTE / ANNOUNCEMENT -->
+    <div class="shot" style="margin-bottom:0;">
+      <div class="canvas-note">Announcement card <span class="dim">— 16:9 · quote / release note</span></div>
+      <div class="comp shot-quote">
+        <div class="layer-halftone fade-r" style="opacity:0.6;"></div>
+        <div class="layer-glow" style="inset:-20% 50% -20% -10%;"></div>
+        <div class="layer-scan"></div>
+        <div class="q-mark">“</div>
+        <div class="q-text">No web tech. No Electron. <span class="hl">Native</span> all the way down.</div>
+        <div class="q-by"><img src="logo.png" alt=""><span>Project Escalion · Dev Update</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- QUICK REFERENCE -->
+  <section class="section">
+    <div class="eyebrow">06 — TL;DR</div>
+    <h2 class="section-title">Quick <em>Reference.</em></h2>
+    <table class="usage-table">
+      <tr><td colspan="2" style="font-family:'Share Tech Mono',monospace;font-size:0.74rem;letter-spacing:0.1em;color:var(--orange2);text-transform:uppercase;">Colors</td><td style="font-family:'Share Tech Mono',monospace;color:rgba(245,240,232,0.6);">#E84400 · #FF6A1A · #0A0A0A · #111111 · #F5F0E8</td></tr>
+      <tr><td colspan="2" style="font-family:'Share Tech Mono',monospace;font-size:0.74rem;letter-spacing:0.1em;color:var(--orange2);text-transform:uppercase;">Fonts</td><td style="font-family:'Share Tech Mono',monospace;color:rgba(245,240,232,0.6);">Black Han Sans · Barlow Condensed · Share Tech Mono</td></tr>
+      <tr><td colspan="2" style="font-family:'Share Tech Mono',monospace;font-size:0.74rem;letter-spacing:0.1em;color:var(--orange2);text-transform:uppercase;">Radius</td><td style="font-family:'Share Tech Mono',monospace;color:rgba(245,240,232,0.6);">Icon container 22% · buttons notched 10px</td></tr>
+      <tr><td colspan="2" style="font-family:'Share Tech Mono',monospace;font-size:0.74rem;letter-spacing:0.1em;color:var(--orange2);text-transform:uppercase;">Texture</td><td style="font-family:'Share Tech Mono',monospace;color:rgba(245,240,232,0.6);">Halftone 28px · scanlines 4px · orange radial glow</td></tr>
+      <tr><td colspan="2" style="font-family:'Share Tech Mono',monospace;font-size:0.74rem;letter-spacing:0.1em;color:var(--orange2);text-transform:uppercase;">Voice</td><td style="font-family:'Share Tech Mono',monospace;color:rgba(245,240,232,0.6);">UPPERCASE headings · terse · technical · confident</td></tr>
+    </table>
+  </section>
+
+  <footer>
+    <div class="footer-left">© 2025 NeuDel-II · NEU Project 3 · Brand Kit v1</div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="https://github.com/prjktescalion" target="_blank">GitHub</a>
+      <a href="logo.png" download>Icon</a>
+    </div>
+  </footer>
+
+</div>
+
+<div class="toast" id="toast">Copied</div>
+
+<script>
+  // click-to-copy hex swatches
+  const toast = document.getElementById('toast');
+  let toastTimer;
+  document.querySelectorAll('.swatch-color[data-hex]').forEach(el => {
+    el.addEventListener('click', () => {
+      const hex = el.dataset.hex;
+      navigator.clipboard?.writeText(hex).then(() => {
+        toast.textContent = 'Copied ' + hex;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove('show'), 1400);
+      });
+    });
+  });
+
+  // subtle parallax on bg glow (matches index.html)
+  document.addEventListener('mousemove', e => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 14;
+    const y = (e.clientY / window.innerHeight - 0.5) * 10;
+    document.querySelector('.bg').style.transform = `translate(${x}px,${y}px)`;
+  });
+</script>
+
+</body>
+</html>
